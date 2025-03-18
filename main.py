@@ -18,25 +18,23 @@ from tqdm import tqdm
 import itertools
 from shapely.geometry import LineString
 
-import pdb
-
 # Function to create a LineString geometry from a string of coordinates
-def create_line_string(geometry_str):
-    try:
-        # Remove any unwanted characters or spaces before parsing
-        geometry_str_clean = geometry_str.strip()
+# def create_line_string(geometry_str):
+#     try:
+#         # Remove any unwanted characters or spaces before parsing
+#         geometry_str_clean = geometry_str.strip()
 
-        # Check if the string starts and ends with square brackets (list format)
-        if geometry_str_clean.startswith('[') and geometry_str_clean.endswith(']'):
-            # Safely convert string to list of coordinates
-            coords = ast.literal_eval(geometry_str_clean)
-            # Create a LineString geometry from the coordinates
-            return LineString(coords)
-        else:
-            raise ValueError(f"Invalid geometry format: {geometry_str}")
-    except (ValueError, SyntaxError, TypeError) as e:
-        print(f"Error processing geometry: {e}")
-        return None  # Return None for invalid geometries
+#         # Check if the string starts and ends with square brackets (list format)
+#         if geometry_str_clean.startswith('[') and geometry_str_clean.endswith(']'):
+#             # Safely convert string to list of coordinates
+#             coords = ast.literal_eval(geometry_str_clean)
+#             # Create a LineString geometry from the coordinates
+#             return LineString(coords)
+#         else:
+#             raise ValueError(f"Invalid geometry format: {geometry_str}")
+#     except (ValueError, SyntaxError, TypeError) as e:
+#         print(f"Error processing geometry: {e}")
+#         return None  # Return None for invalid geometries
 
 def df_to_gdf(df, route_geometry_col='geometry'):
     df['geometry'] = df[route_geometry_col].apply(lambda x: LineString(x) if isinstance(x, list) else x)
@@ -280,20 +278,21 @@ def main():
                 df_fallas = pd.merge(df_fallas, df_routes_opt["ori"], left_on='Falla',right_on="ori", how="right")
                 df_fallas.reset_index(drop=True, inplace=True)
 
+                # Crear el mapa
+                map_html = create_route_map(df_fallas, df_routes_opt)  # Generar el mapa como HTML
+                
+                # Mostrar el mapa en el Streamlit
+                components.html(map_html, width=1250, height=600)
+
+                st.write("Ruta óptima generada:")
+                for i, falla in enumerate(df_fallas.Falla.unique()):
+                    st.write(i, falla)
+            
             except ValueError:
-                st.error("Please enter valid coordinates in 'latitude,longitude' format.")
+                st.error("Por favor, introduce las coordenadas así: latitud,longitud, (latitud, longitud)")
         else:
             st.warning("Please enter a valid coordinate.")
 
-        # Crear el mapa
-        map_html = create_route_map(df_fallas, df_routes_opt)  # Generar el mapa como HTML
-        
-        # Mostrar el mapa en el Streamlit
-        components.html(map_html, width=1250, height=600)
-
-        st.write("Ruta óptima generada:")
-        for i, falla in enumerate(df_fallas.Falla.unique()):
-            st.write(i, falla)
 
 
 # Ejecutar la función principal
