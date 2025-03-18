@@ -96,7 +96,7 @@ dependencies:
       - more-itertools==10.6.0
       - narwhals==1.30.0
       - numpy==1.26.4
-      - ortools==9.12.4544
+      - ortools
       - outcome==1.3.0.post0
       - pandas==2.2.3
       - pillow==10.4.0
