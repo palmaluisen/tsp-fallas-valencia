@@ -1,7 +1,6 @@
 name: falles
 channels:
   - conda-forge
-  - defaults
 dependencies:
 
   - appnope=0.1.4=pyhd8ed1ab_1
