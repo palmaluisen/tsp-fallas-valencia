@@ -1,7 +1,6 @@
 name: falles
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - pip
   - numpy
