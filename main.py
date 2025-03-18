@@ -105,8 +105,8 @@ def create_route_map(df_coordinates, df_routes):
 
 # Function to load data
 def load_data():
-    df_fallas = pd.read_csv("fallas.csv")
-    df_routes = pd.read_csv('df_routes.csv')
+    df_fallas = pd.read_csv("data/fallas.csv")
+    df_routes = pd.read_csv('data/df_routes.csv')
     df_routes['geometry'] = df_routes['geometry'].apply(ast.literal_eval)
     return df_fallas, df_routes
 
@@ -244,7 +244,8 @@ def main():
                 input_coor = input_coor.replace(' ', '').split(',')
                 input_lat = float(input_coor[0])
                 input_lon = float(input_coor[1])
-                st.write(f"Starting at {input_name}")  # Mostrar el texto
+                st.write("Buscando la mejor ruta...")
+                st.write(f"Enpezando por {input_name}")  # Mostrar el texto
 
                 ###### Optimize the route
                 print('loading data...')
@@ -286,9 +287,14 @@ def main():
 
         # Crear el mapa
         map_html = create_route_map(df_fallas, df_routes_opt)  # Generar el mapa como HTML
-
+        
         # Mostrar el mapa en el Streamlit
         components.html(map_html, width=1250, height=600)
+
+        st.write("Ruta óptima generada:")
+        for i, falla in enumerate(df_fallas.Falla.unique()):
+            st.write(i, falla)
+
 
 # Ejecutar la función principal
 if __name__ == '__main__':
