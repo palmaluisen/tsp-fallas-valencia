@@ -245,7 +245,7 @@ def main():
                 input_lat = float(input_coor[0])
                 input_lon = float(input_coor[1])
                 st.write("Buscando la mejor ruta...")
-                st.write(f"Enpezando por {input_name}")  # Mostrar el texto
+                st.write(f"Empezando por {input_name}")  # Mostrar el texto
 
                 ###### Optimize the route
                 print('loading data...')
