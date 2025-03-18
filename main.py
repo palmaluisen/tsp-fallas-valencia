@@ -289,7 +289,7 @@ def main():
                     st.write(i, falla)
             
             except ValueError:
-                st.error("Por favor, introduce las coordenadas así: latitud,longitud, (latitud, longitud)")
+                st.error("Por favor, introduce las coordenadas así: latitud,longitud o así: (latitud, longitud)")
         else:
             st.warning("Please enter a valid coordinate.")
 
