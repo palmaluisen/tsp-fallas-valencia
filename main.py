@@ -285,8 +285,15 @@ def main():
                 components.html(map_html, width=1250, height=600)
 
                 st.write("Ruta óptima generada:")
-                for i, falla in enumerate(df_fallas.Falla.unique()):
-                    st.write(i, falla)
+                for i in df_fallas.index:
+                    nombre = df_fallas.at[i, "Falla"]
+                    enlace = df_fallas.at[i, "Enlace"]
+                    
+                    if isinstance(enlace, str) and enlace.strip():  # Verifica que el enlace no esté vacío
+                        st.markdown(f'<a href="{enlace}" target="_blank">{i}, {nombre}</a>', unsafe_allow_html=True)
+                    else:
+                        st.write(f"{i}, {nombre}")
+                    
             
             except ValueError:
                 st.error("Por favor, introduce las coordenadas así: latitud,longitud o así: (latitud, longitud)")
