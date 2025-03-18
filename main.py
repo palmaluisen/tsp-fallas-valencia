@@ -241,7 +241,7 @@ def main():
     if execute_button:
         if input_coor.strip():  # Verificar que el input no esté vacío
             try:
-                input_coor = input_coor.replace(' ', '').split(',')
+                input_coor = input_coor.replace(' ', '').replace('(', '').replace(')','').split(',')
                 input_lat = float(input_coor[0])
                 input_lon = float(input_coor[1])
                 st.write("Buscando la mejor ruta...")
