@@ -95,7 +95,7 @@ def create_route_map(df_coordinates, df_routes):
             folium.PolyLine(
                 locations=[[co[1], co[0]] for co in coordinates],
                 color=route_color,
-                weight=2.5,
+                weight=3.8,
                 opacity=1
             ).add_to(m)
     print('mapa creado')
